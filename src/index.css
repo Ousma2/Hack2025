@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* BTP Theme - Orange Construction + Blue Industrial */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
+
+    /* Primary: Orange construction (casques de chantier) */
+    --primary: 24 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 24 100% 60%;
+
+    /* Secondary: Blue industriel */
+    --secondary: 214 84% 56%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted: Gris béton */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    /* Accent: Orange plus clair */
+    --accent: 33 100% 96%;
+    --accent-foreground: 24 100% 40%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 24 100% 50%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* BTP Dark Theme */
+    --background: 220 13% 9%;
+    --foreground: 0 0% 98%;
+
+    --card: 220 13% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 220 13% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 24 100% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 24 100% 65%;
+
+    --secondary: 214 84% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 13% 15%;
+    --muted-foreground: 220 9% 60%;
+
+    --accent: 220 13% 15%;
+    --accent-foreground: 24 100% 55%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 20%;
+    --input: 220 13% 20%;
+    --ring: 24 100% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+/* BTP Connect Design System Extensions */
+@layer base {
+  :root {
+    /* Construction gradients */
+    --gradient-construction: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary-glow)) 100%);
+    --gradient-industrial: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(214 84% 70%) 100%);
+    --gradient-concrete: linear-gradient(180deg, hsl(var(--muted)) 0%, hsl(220 14% 90%) 100%);
+    
+    /* Shadows for professional depth */
+    --shadow-construction: 0 10px 25px -5px hsl(var(--primary) / 0.2);
+    --shadow-industrial: 0 10px 25px -5px hsl(var(--secondary) / 0.2);
+    --shadow-card: 0 4px 12px -2px hsl(220 13% 18% / 0.1);
+    
+    /* BTP specific animations */
+    --transition-construction: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+
+  /* Construction theme utility classes */
+  .gradient-construction {
+    background: var(--gradient-construction);
+  }
+
+  .gradient-industrial {
+    background: var(--gradient-industrial);
+  }
+
+  .gradient-concrete {
+    background: var(--gradient-concrete);
+  }
+
+  .shadow-construction {
+    box-shadow: var(--shadow-construction);
+  }
+
+  .shadow-industrial {
+    box-shadow: var(--shadow-industrial);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .transition-construction {
+    transition: var(--transition-construction);
+  }
+}
