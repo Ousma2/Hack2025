@@ -14,7 +14,8 @@ import {
   BarChart3, 
   Calendar,
   LogOut,
-  Settings
+  Settings,
+  Brain
 } from 'lucide-react';
 import heroImage from '@/assets/hero-btp.jpg';
 
@@ -356,6 +357,26 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Brain className="w-5 h-5" />
+                  <span>IA d'Estimation</span>
+                </CardTitle>
+                <CardDescription>
+                  Estimez les coûts et délais avec notre intelligence artificielle
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button variant="construction" className="w-full" onClick={() => navigate('/ai')}>
+                  Formulaire IA
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/ai-chat')}>
+                  IA Interactive (Chat)
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -411,6 +432,26 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Brain className="w-5 h-5" />
+                  <span>IA d'Estimation</span>
+                </CardTitle>
+                <CardDescription>
+                  Optimisez vos prix avec notre intelligence artificielle
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button variant="construction" className="w-full" onClick={() => navigate('/ai')}>
+                  Formulaire IA
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/ai-chat')}>
+                  IA Interactive (Chat)
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -463,6 +504,26 @@ const Index = () => {
               <CardContent>
                 <Button variant="outline" className="w-full">
                   Voir les stats
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Brain className="w-5 h-5" />
+                  <span>IA d'Estimation</span>
+                </CardTitle>
+                <CardDescription>
+                  Planifiez vos chantiers avec notre intelligence artificielle
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button variant="construction" className="w-full" onClick={() => navigate('/ai')}>
+                  Formulaire IA
+                </Button>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/ai-chat')}>
+                  IA Interactive (Chat)
                 </Button>
               </CardContent>
             </Card>
