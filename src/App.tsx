@@ -7,6 +7,10 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import AI from "./pages/AI";
 import AIChatPage from "./pages/AIChatPage";
+import Chat from "./pages/Chat";
+import ChatTest from "./components/ChatTest";
+import ConversationTest from "./components/ConversationTest";
+import SelectionTest from "./components/SelectionTest";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +26,10 @@ const App = () => (
           <Route path="/auth" element={<Auth />} />
           <Route path="/ai" element={<AI />} />
           <Route path="/ai-chat" element={<AIChatPage />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/chat-test" element={<ChatTest />} />
+          <Route path="/conversation-test" element={<ConversationTest />} />
+          <Route path="/selection-test" element={<SelectionTest />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

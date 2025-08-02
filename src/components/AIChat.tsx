@@ -70,7 +70,7 @@ const AIChat = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [showFileUpload, setShowFileUpload] = useState(false);
-  const [aiName, setAiName] = useState('Bandit 40ans');
+  const [aiName, setAiName] = useState('Marydahh');
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: '',
     preferences: [],
@@ -132,7 +132,7 @@ const AIChat = () => {
       "bonjour": "Bonjour ! Comment puis-je vous aider aujourd'hui ? 😊",
       "merci": "De rien ! C'est un plaisir de vous aider ! 💝",
              "comment ça va": "Très bien merci ! J'ai passé une excellente journée à aider des gens avec leurs projets de construction. Et vous ?",
-       "qui es-tu": "Je suis Bandit 40ans, votre assistante IA spécialisée en construction ! J'ai 40 ans d'expérience virtuelle et j'adore aider les gens à réaliser leurs projets. Je suis curieuse, passionnée et toujours de bonne humeur ! 😄",
+       "qui es-tu": "Je suis Marydahh, votre assistante IA spécialisée en construction ! J'ai 40 ans d'expérience virtuelle et j'adore aider les gens à réaliser leurs projets. Je suis curieuse, passionnée et toujours de bonne humeur ! 😄",
       "humeur": "Je suis de très bonne humeur aujourd'hui ! J'ai l'impression que c'est une belle journée pour créer quelque chose d'extraordinaire. Et vous, comment vous sentez-vous ?"
     },
     construction: {
@@ -860,7 +860,7 @@ Voulez-vous que j'ajuste certains paramètres ou que je vous aide avec autre cho
           </h1>
         </div>
                  <p className="text-muted-foreground">
-           Votre amie IA de 40 ans spécialisée en construction - Toujours de bonne humeur et prête à vous aider ! 😊
+           Votre amie Marydahh, IA de 40 ans spécialisée en construction - Toujours de bonne humeur et prête à vous aider ! 😊
          </p>
         {userProfile.name && (
           <div className="mt-2">

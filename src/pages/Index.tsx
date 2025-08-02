@@ -15,7 +15,8 @@ import {
   Calendar,
   LogOut,
   Settings,
-  Brain
+  Brain,
+  MessageCircle
 } from 'lucide-react';
 import heroImage from '@/assets/hero-btp.jpg';
 
@@ -377,6 +378,23 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Chat & Communication</span>
+                </CardTitle>
+                <CardDescription>
+                  Communiquez avec les autres acteurs du BTP en temps réel
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="construction" className="w-full" onClick={() => navigate('/chat')}>
+                  Ouvrir le Chat
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -452,6 +470,23 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Chat & Communication</span>
+                </CardTitle>
+                <CardDescription>
+                  Communiquez avec les clients et chefs de chantier en temps réel
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="construction" className="w-full" onClick={() => navigate('/chat')}>
+                  Ouvrir le Chat
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -524,6 +559,23 @@ const Index = () => {
                 </Button>
                 <Button variant="outline" className="w-full" onClick={() => navigate('/ai-chat')}>
                   IA Interactive (Chat)
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <MessageCircle className="w-5 h-5" />
+                  <span>Chat & Communication</span>
+                </CardTitle>
+                <CardDescription>
+                  Communiquez avec vos clients et fournisseurs en temps réel
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="construction" className="w-full" onClick={() => navigate('/chat')}>
+                  Ouvrir le Chat
                 </Button>
               </CardContent>
             </Card>
