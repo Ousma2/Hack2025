@@ -16,7 +16,8 @@ import {
   LogOut,
   Settings,
   Brain,
-  MessageCircle
+  MessageCircle,
+  Bell
 } from 'lucide-react';
 import heroImage from '@/assets/hero-btp.jpg';
 
@@ -319,7 +320,7 @@ const Index = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button variant="construction" className="w-full">
+                <Button variant="construction" className="w-full" onClick={() => navigate('/map')}>
                   Voir la carte
                 </Button>
               </CardContent>
@@ -392,6 +393,23 @@ const Index = () => {
               <CardContent>
                 <Button variant="construction" className="w-full" onClick={() => navigate('/chat')}>
                   Ouvrir le Chat
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Bell className="w-5 h-5" />
+                  <span>Notifications</span>
+                </CardTitle>
+                <CardDescription>
+                  Consultez toutes vos notifications et alertes
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/notifications')}>
+                  Voir les notifications
                 </Button>
               </CardContent>
             </Card>
@@ -487,6 +505,23 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Bell className="w-5 h-5" />
+                  <span>Notifications</span>
+                </CardTitle>
+                <CardDescription>
+                  Consultez toutes vos notifications et alertes
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/notifications')}>
+                  Voir les notifications
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
@@ -576,6 +611,23 @@ const Index = () => {
               <CardContent>
                 <Button variant="construction" className="w-full" onClick={() => navigate('/chat')}>
                   Ouvrir le Chat
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="shadow-card">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <Bell className="w-5 h-5" />
+                  <span>Notifications</span>
+                </CardTitle>
+                <CardDescription>
+                  Consultez toutes vos notifications et alertes
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="outline" className="w-full" onClick={() => navigate('/notifications')}>
+                  Voir les notifications
                 </Button>
               </CardContent>
             </Card>
