@@ -17,7 +17,9 @@ import {
   AlertTriangle,
   FileSpreadsheet,
   Upload,
-  Download
+  Download,
+  Calendar,
+  CalendarDays
 } from 'lucide-react';
 
 interface ProjectData {
@@ -30,6 +32,8 @@ interface ProjectData {
   cout_main_oeuvre: number;
   duree_estimee: number;
   retards: number;
+  date_debut?: string;
+  date_fin?: string;
 }
 
 interface Prediction {
@@ -39,6 +43,8 @@ interface Prediction {
   cout_main_oeuvre_estime: number;
   risque_retard: number;
   recommandations: string[];
+  date_debut_estimee: string;
+  date_fin_estimee: string;
 }
 
 const AIEstimator = () => {
@@ -53,8 +59,7 @@ const AIEstimator = () => {
   const [prediction, setPrediction] = useState<Prediction | null>(null);
   const [loading, setLoading] = useState(false);
 
-
-  // Données d'exemple pour démonstration
+  // Données d'exemple réalistes pour des projets BTP
   const sampleData: ProjectData[] = [
     {
       type: 'résidentiel',
@@ -65,7 +70,9 @@ const AIEstimator = () => {
       cout_materiaux: 25000000,
       cout_main_oeuvre: 15000000,
       duree_estimee: 90,
-      retards: 5
+      retards: 5,
+      date_debut: '2024-01-15',
+      date_fin: '2024-04-15'
     },
     {
       type: 'commercial',
@@ -76,7 +83,9 @@ const AIEstimator = () => {
       cout_materiaux: 80000000,
       cout_main_oeuvre: 45000000,
       duree_estimee: 180,
-      retards: 15
+      retards: 15,
+      date_debut: '2024-02-01',
+      date_fin: '2024-08-01'
     },
     {
       type: 'industriel',
@@ -87,7 +96,9 @@ const AIEstimator = () => {
       cout_materiaux: 150000000,
       cout_main_oeuvre: 80000000,
       duree_estimee: 240,
-      retards: 20
+      retards: 20,
+      date_debut: '2024-03-01',
+      date_fin: '2024-11-01'
     },
     {
       type: 'résidentiel',
@@ -98,7 +109,9 @@ const AIEstimator = () => {
       cout_materiaux: 35000000,
       cout_main_oeuvre: 20000000,
       duree_estimee: 120,
-      retards: 8
+      retards: 8,
+      date_debut: '2024-04-01',
+      date_fin: '2024-08-01'
     },
     {
       type: 'commercial',
@@ -109,7 +122,9 @@ const AIEstimator = () => {
       cout_materiaux: 55000000,
       cout_main_oeuvre: 35000000,
       duree_estimee: 150,
-      retards: 12
+      retards: 12,
+      date_debut: '2024-05-01',
+      date_fin: '2024-10-01'
     }
   ];
 
@@ -120,6 +135,21 @@ const AIEstimator = () => {
 
   const handleDataParsed = (newData: ProjectData[]) => {
     setHistoricalData(newData);
+  };
+
+  // Fonction pour calculer les dates réalistes
+  const calculateDates = (dureeEstimee: number): { date_debut: string; date_fin: string } => {
+    const today = new Date();
+    const dateDebut = new Date(today);
+    dateDebut.setDate(today.getDate() + 30); // Commence dans 30 jours
+    
+    const dateFin = new Date(dateDebut);
+    dateFin.setDate(dateDebut.getDate() + dureeEstimee);
+    
+    return {
+      date_debut: dateDebut.toISOString().split('T')[0],
+      date_fin: dateFin.toISOString().split('T')[0]
+    };
   };
 
   const calculatePrediction = (): Prediction => {
@@ -140,35 +170,48 @@ const AIEstimator = () => {
     const avgRetards = similarProjects.reduce((sum, p) => sum + p.retards, 0) / similarProjects.length;
 
     // Facteurs d'ajustement basés sur la surface
-    const surfaceFactor = surface / similarProjects.reduce((sum, p) => sum + p.surface, 0) / similarProjects.length;
+    const avgSurface = similarProjects.reduce((sum, p) => sum + p.surface, 0) / similarProjects.length;
+    const surfaceFactor = surface / avgSurface;
     
     // Facteurs météo
     const temperatureFactor = temperature > 30 ? 1.1 : temperature < 20 ? 0.95 : 1.0;
     const pluieFactor = pluie > 10 ? 1.15 : pluie > 5 ? 1.05 : 1.0;
 
-    // Calculs finaux
+    // Facteur d'équipe (plus d'ouvriers = durée réduite mais coût main d'œuvre augmenté)
+    const avgOuvriers = similarProjects.reduce((sum, p) => sum + p.ouvriers, 0) / similarProjects.length;
+    const ouvriersFactor = ouvriers > avgOuvriers ? 0.8 : ouvriers < avgOuvriers ? 1.2 : 1.0;
+    const mainOeuvreFactor = ouvriers / avgOuvriers;
+
+    // Calculs finaux avec des durées plus réalistes
     const coutMateriauxEstime = avgCoutMateriaux * surfaceFactor * temperatureFactor * pluieFactor;
-    const coutMainOeuvreEstime = avgCoutMainOeuvre * surfaceFactor * temperatureFactor * pluieFactor;
-    const dureeEstimee = avgDuree * surfaceFactor * temperatureFactor * pluieFactor;
+    const coutMainOeuvreEstime = avgCoutMainOeuvre * surfaceFactor * mainOeuvreFactor * temperatureFactor * pluieFactor;
+    const dureeEstimee = Math.max(30, Math.round(avgDuree * surfaceFactor * temperatureFactor * pluieFactor * ouvriersFactor));
     const coutTotal = coutMateriauxEstime + coutMainOeuvreEstime;
     
-    // Calcul du risque de retard
-    const risqueRetard = Math.min(100, (pluie / 10) * 20 + (temperature > 35 ? 15 : 0) + (avgRetards / avgDuree) * 100);
+    // Calcul du risque de retard plus réaliste
+    const risqueRetard = Math.min(100, Math.max(5, (pluie / 10) * 15 + (temperature > 35 ? 10 : 0) + (avgRetards / avgDuree) * 100));
 
-    // Recommandations
+    // Calcul des dates
+    const dates = calculateDates(dureeEstimee);
+
+    // Recommandations améliorées
     const recommandations = [];
-    if (pluie > 10) recommandations.push("Prévoir des protections contre la pluie");
-    if (temperature > 30) recommandations.push("Adapter les horaires de travail pour éviter les heures chaudes");
-    if (surface > 500) recommandations.push("Considérer une équipe plus importante pour accélérer le projet");
-    if (risqueRetard > 30) recommandations.push("Prévoir une marge de sécurité dans le planning");
+    if (pluie > 10) recommandations.push("Prévoir des protections contre la pluie et des toitures temporaires");
+    if (temperature > 30) recommandations.push("Adapter les horaires de travail (6h-12h, 16h-22h) pour éviter les heures chaudes");
+    if (surface > 500) recommandations.push("Considérer une équipe plus importante et des équipements supplémentaires");
+    if (risqueRetard > 30) recommandations.push("Prévoir une marge de sécurité de 15-20% dans le planning");
+    if (ouvriers < 10 && surface > 200) recommandations.push("Augmenter le nombre d'ouvriers pour respecter les délais");
+    if (dureeEstimee > 180) recommandations.push("Planifier les achats de matériaux à l'avance pour éviter les ruptures");
 
     return {
       cout_total: Math.round(coutTotal),
-      duree_estimee: Math.round(dureeEstimee),
+      duree_estimee: dureeEstimee,
       cout_materiaux_estime: Math.round(coutMateriauxEstime),
       cout_main_oeuvre_estime: Math.round(coutMainOeuvreEstime),
       risque_retard: Math.round(risqueRetard),
-      recommandations
+      recommandations,
+      date_debut_estimee: dates.date_debut,
+      date_fin_estimee: dates.date_fin
     };
   };
 
@@ -177,20 +220,25 @@ const AIEstimator = () => {
     const avgCoutMainOeuvre = historicalData.reduce((sum, p) => sum + p.cout_main_oeuvre, 0) / historicalData.length;
     const avgDuree = historicalData.reduce((sum, p) => sum + p.duree_estimee, 0) / historicalData.length;
     
-    const surfaceFactor = newProject.surface / (historicalData.reduce((sum, p) => sum + p.surface, 0) / historicalData.length);
+    const avgSurface = historicalData.reduce((sum, p) => sum + p.surface, 0) / historicalData.length;
+    const surfaceFactor = newProject.surface / avgSurface;
     
     const coutMateriauxEstime = avgCoutMateriaux * surfaceFactor;
     const coutMainOeuvreEstime = avgCoutMainOeuvre * surfaceFactor;
-    const dureeEstimee = avgDuree * surfaceFactor;
+    const dureeEstimee = Math.max(30, Math.round(avgDuree * surfaceFactor));
     const coutTotal = coutMateriauxEstime + coutMainOeuvreEstime;
+    
+    const dates = calculateDates(dureeEstimee);
     
     return {
       cout_total: Math.round(coutTotal),
-      duree_estimee: Math.round(dureeEstimee),
+      duree_estimee: dureeEstimee,
       cout_materiaux_estime: Math.round(coutMateriauxEstime),
       cout_main_oeuvre_estime: Math.round(coutMainOeuvreEstime),
       risque_retard: 25,
-      recommandations: ["Utilisation de données générales pour l'estimation"]
+      recommandations: ["Utilisation de données générales pour l'estimation", "Recommandé d'ajouter des données spécifiques au type de projet"],
+      date_debut_estimee: dates.date_debut,
+      date_fin_estimee: dates.date_fin
     };
   };
 
@@ -209,6 +257,14 @@ const AIEstimator = () => {
       currency: 'XOF',
       minimumFractionDigits: 0
     }).format(amount);
+  };
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('fr-FR', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
   };
 
   return (
@@ -364,6 +420,25 @@ const AIEstimator = () => {
                         {formatCurrency(prediction.cout_main_oeuvre_estime)}
                       </div>
                       <div className="text-sm text-muted-foreground">Main d'œuvre</div>
+                    </div>
+                  </div>
+
+                  {/* Dates estimées */}
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div className="text-center p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center space-x-2 mb-2">
+                        <Calendar className="w-4 h-4 text-primary" />
+                        <span className="font-semibold">Début estimé</span>
+                      </div>
+                      <div className="text-sm">{formatDate(prediction.date_debut_estimee)}</div>
+                    </div>
+                    
+                    <div className="text-center p-3 bg-muted rounded-lg">
+                      <div className="flex items-center justify-center space-x-2 mb-2">
+                        <CalendarDays className="w-4 h-4 text-secondary" />
+                        <span className="font-semibold">Fin estimée</span>
+                      </div>
+                      <div className="text-sm">{formatDate(prediction.date_fin_estimee)}</div>
                     </div>
                   </div>
 
