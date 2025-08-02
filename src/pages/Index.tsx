@@ -413,6 +413,24 @@ const Index = () => {
                 </Button>
               </CardContent>
             </Card>
+
+            {/* Carte de test pour vérifier que les nouvelles fonctionnalités s'affichent */}
+            <Card className="shadow-card border-2 border-green-500">
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2 text-green-600">
+                  <MapPin className="w-5 h-5" />
+                  <span>Nouvelle Carte - Test</span>
+                </CardTitle>
+                <CardDescription>
+                  Cette carte confirme que les nouvelles fonctionnalités sont bien ajoutées
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button variant="construction" className="w-full" onClick={() => navigate('/map')}>
+                  Tester la Carte Interactive
+                </Button>
+              </CardContent>
+            </Card>
           </div>
         )}
 
