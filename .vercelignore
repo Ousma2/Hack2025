@@ -29,6 +29,9 @@ coverage/
 *.test.js
 *.test.ts
 *.test.tsx
+**/ChatTest.tsx
+**/ConversationTest.tsx
+**/SelectionTest.tsx
 
 # Documentation
 README.md
